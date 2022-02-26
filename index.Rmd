@@ -5,67 +5,63 @@ output: html_document
 
 ### Introduction
 
-An introduction of the problem domain and a description of the variable(s) you are choosing to analyze (and why!)
+My project analyzes a data set that consists of incarceration data in the United States of America, ranging from 1970 to 2018. The purpose of the project is to think about how incarceration varies by race in the U.S., look at trends in incarceration over time, and create a map that shows how the incarcerated population is distributed geographically.
 
 ### Summary Information
+```{r, echo=FALSE, message=FALSE}
+options(scipen=999)
+source("summary.R")
+```
 
-Write a summary paragraph of findings that includes the 5 values calculated from your summary information R script
-
-These will likely be calculated using your DPLYR skills, answering questions such as: 
-
-- What is the average value of my variable across all the counties (in the current year)?
-- Where is my variable the highest / lowest?
-- How much has my variable change over the last N years?
-
-Feel free to calculate and report values that you find relevant. Again, remember that the purpose is to think about how these measure of incarceration vary by race.
+Analysis conducted on the data showed that `r summary_info$incarcerated_2018` people were incarcerated in 2018. Of these people, `r summary_info$white_incarceration`% were white, `r summary_info$black_incarceration`% were black, `r summary_info$latinx_incarceration`% were Latinx, `r summary_info$aapi_incarceration`% were Asian American and Pacific Islander, and `r summary_info$native_incarceration`% were Native American. However, in 2018, `r summary_info$white_proportion`% of the US population was white, `r summary_info$black_proportion`% was black, `r summary_info$latinx_proportion`% was Latinx, `r summary_info$aapi_proportion`% was Asian American and Pacific Islander, and `r summary_info$native_proportion`% was Native American. The differences between these two percentage groups show that there is an imbalance in the United States' criminal system, leading to significant overcriminalization for minorities.
 
 ### The Dataset
 
-Who collected the data?  
-How was the data collected or generated?  
-Why was the data collected?  
-How many observations (rows) are in your data?  
-How many features (columns) are in the data?  
-What, if any, ethical questions or questions of power do you need to consider when working with this data?  
-What are possible limitations or problems with this data?   (at least 200 words)
+Who collected the data?
+The Vera Institute collected the data from a number of federal departments in the U.S..
 
+How was the data collected or generated?
+The incarceration data was collected by the U.S. Department of Justice Bureau of Justice Statistics, and supplemented with data from state departments of correction when federal data was unavailable or missing. The population data was supplied by the U.S. Census Bureau and the Centers for Disease Control and Prevention, and the geographic data was supplied by the U.S. Department of Agriculture and Census Bureau.
+
+Why was the data collected? 
+The data was collected to study, expose, and end the overcriminalization and incarceration of people of color, people experiencing poverty, and immigrants. This was done with the goal of creating safe, healthy, empowered communities and a fair justice system.
+
+How many observations (rows) are in your data?
+There are 153,811 observations in the data.
+
+How many features (columns) are in the data?
+There are 121 features in the data.
+
+What, if any, ethical questions or questions of power do you need to consider when working with this data?  
+What are possible limitations or problems with this data?
+
+The data is large and messy, and there are many missing values that limit the conclusions that can be drawn from certain locations or years. As a result of being removed from the collection of the data, I also need to ensure that I don't suppress voices or exclude key information just to emphasize clarity and cleanliness in my visualizations. Finally, I have to recognize that the dataset is strongly related to racism and inequality in America, and I need to be careful to avoid bias in my analysis and conclusions.
 
 ### Trends Over Time Chart
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
+This chart describes how the jail populations of different races in the United States changed from 1985 to 2018. 
 
-The first chart that you will create and include will show the trend over time of your variable/topic. Think carefully about what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- Show more than one, but fewer than ~10 trends
-  - This may mean showing the same measure for different locations or different racial groups. Think carefully about a meaningful comparison of locations (e.g., the top 10 counties in a state, top 10 states, etc.)
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear legend title
-
-When we say "clear" or "human readable" titles and labels, that means that you should not just display the variable name.
-
-Here's an example of how to run an R script inside an RMarkdown file:
-
-``````{r, echo = FALSE, code = readLines("chart1_example.R")}
+```{r, echo = FALSE, warning = FALSE, message = FALSE, code = readLines("time_chart.R")}
+source("time_chart.R")
 ```
+
+The chart shows that jail populations increased for each race from 1985 to 2006. During this time, white and black incarceration was rather similar, with Latinx incarceration at about 1/3 of them. However, after 2006, white incarceration stayed roughly the same, while black and Latinx incarceration both decreased. Relative to the other 3 plotted races, AAPI and Native American incarceration was low, but it still followed similar trends.
 
 ### Variable Comparison Chart
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
+This chart shows the jail populations of different regions in the United States in 2018, and how different races are distributed in those regions. 
 
-The second chart that you will create and include will show how two different (continuous) variables are related to one another. Again, think carefully about what such a comparison means and what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
+```{r, echo = FALSE, warning = FALSE, message = FALSE, code = readLines("variable_chart.R")}
+source("variable_chart.R")
+```
 
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- If you choose to add a color encoding (not required), you need a legend for your different color and a clear legend title
+The chart shows that the region with the largest jailed population in the United States is by far the South, with roughly as many people in jail as the other three regions combined. The West and Midwest have relatively similar jailed populations, and the smallest population is in the Northeast. It also shows that the West has the highest relative proportion of jailed Latinx and AAPI people, and that the South holds roughly the same amount of white and black people in jail.
 
 ### Map
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
+The following map shows the counties of the United States, with color corresponding to the amount of incarcerated individuals in that region. 
+```{r, echo = FALSE, warning = FALSE, code = readLines("map.R")}
+source("map.R")
+```
 
-The last chart that you will create and include will show how a variable is distributed geographically. Again, think carefully about what such a comparison means and what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- Your map needs a title
-- Your color scale needs a legend with a clear label
-- Use a map based coordinate system to set the aspect ratio of your map
-- Use a minimalist theme for the map 
+It's important to note that many NA values were treated as 0 when creating this chart, so assumptions have been made and it may be missing data for some counties. Nevertheless, this chart shows that more counties in the eastern and southern United States have an incarcerated population when compared to the Midwest and Northeast. It also shows that the highest incarcerated population is in southern California.
